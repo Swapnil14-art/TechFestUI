@@ -39,7 +39,7 @@ export default function InterstellarHeroVideo({ onExploreEvents, onOpenPass }) {
       video.playsInline = true;
       const playPromise = video.play();
       if (playPromise !== undefined) {
-        playPromise.catch(() => {});
+        playPromise.catch(() => { });
       }
     }
   }, []);
@@ -156,13 +156,13 @@ export default function InterstellarHeroVideo({ onExploreEvents, onOpenPass }) {
           loop
           playsInline
           preload="auto"
-          className="w-full h-full object-cover object-center filter contrast-[1.08] brightness-[0.85]"
+          className="w-full h-full object-cover object-center filter contrast-[1.06] brightness-[0.92]"
         />
 
-        {/* Chiaroscuro Cinematic Overlays: Obsidian, Amber & Gold Atmospheres */}
-        <div className="absolute inset-0 bg-gradient-to-t from-void via-void/40 to-void/75 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-r from-void/85 via-transparent to-void/85 pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(2,4,8,0.7)_75%,#020408_100%)] pointer-events-none" />
+        {/* Chiaroscuro Cinematic Overlays: Obsidian, Amber & Gold Atmospheres (5-8% lighter center clarity) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-void via-void/35 to-void/70 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-void/80 via-transparent to-void/80 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_32%,rgba(2,4,8,0.65)_75%,#020408_100%)] pointer-events-none" />
 
         {/* Molten Amber & Gold Accretion Flare */}
         <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[400px] bg-gradient-to-b from-gold-deep/20 via-amber-molten/10 to-transparent blur-[140px] rounded-full pointer-events-none" />

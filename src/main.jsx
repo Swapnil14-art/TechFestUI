@@ -4,10 +4,10 @@ import './styles.css';
 import Navbar from './components/Navbar';
 import InterstellarHeroVideo from './components/InterstellarHeroVideo';
 import DimensionalTransition from './components/DimensionalTransition';
-import FestEvents from './components/FestEvents';
+import SchrodingerEventsGrid from './components/SchrodingerEventsGrid';
+import FigureGroundArenas from './components/FigureGroundArenas';
 import FestWorkshops from './components/FestWorkshops';
-import RealityEngine from './components/RealityEngine';
-import FestSchedule from './components/FestSchedule';
+import MirrorScheduleTimeline from './components/MirrorScheduleTimeline';
 import CosmicTransmissionStudio from './components/CosmicTransmissionStudio';
 import RegistrationGateway from './components/RegistrationGateway';
 import SponsorsEcosystem from './SponsorsEcosystem';
@@ -70,36 +70,40 @@ function App() {
       {/* 1. CINEMATIC HERO: FULLSCREEN INTERSTELLAR VIDEO BACKGROUND */}
       <div id="hero-section">
         <InterstellarHeroVideo
-          onExploreEvents={() => scrollTo('arenas-section')}
+          onExploreEvents={() => scrollTo('events-section')}
           onOpenPass={() => scrollTo('pass-section')}
         />
       </div>
 
-      {/* 2. DIMENSIONAL TRANSITION: THE GRAVITATIONAL RING BREACH */}
+      {/* 2. EVENT HORIZON TRANSITION BRIDGE */}
       <DimensionalTransition />
 
-      {/* 3. CONTRADICTION ARENAS (COMPETITIONS & HACKATHONS) */}
-      <section id="arenas-section" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 bg-celestial-events rounded-3xl my-6 border border-gold-antique/20 shadow-2xl">
-        <FestEvents
+      {/* 3. EVENTS — SCHRÖDINGER GRID (DUAL OVERLAPPING PROBABILITY STATES) */}
+      <section id="events-section" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 bg-celestial-events rounded-3xl my-6 border border-[#EA580C]/25 shadow-2xl">
+        <SchrodingerEventsGrid
           onSelectTrack={(trackName) => {
             scrollTo('pass-section');
           }}
         />
       </section>
 
-      {/* 4. TECHNICAL MASTERCLASSES & WORKSHOPS */}
+      {/* 4. CONTRADICTION ARENAS — FIGURE/GROUND GESTALT MATRIX */}
+      <section id="arenas-section" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 my-6">
+        <FigureGroundArenas
+          onSelectTrack={(trackName) => {
+            scrollTo('pass-section');
+          }}
+        />
+      </section>
+
+      {/* 5. TECHNICAL MASTERCLASSES & WORKSHOPS */}
       <section id="workshops-section" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 border-t border-white/5">
         <FestWorkshops onRegisterPass={() => scrollTo('pass-section')} />
       </section>
 
-      {/* 5. SIGNATURE INTERACTIVE PARADOX EXPERIMENT: THE REALITY ENGINE */}
-      <section id="reality-engine-section" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 bg-nebula-engine rounded-3xl my-6 border border-gold-antique/25 shadow-2xl">
-        <RealityEngine />
-      </section>
-
-      {/* 6. ORBITAL SPACETIME CHRONOLOGY (FOUR-DAY SCHEDULE) */}
-      <section id="schedule-section" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 bg-deep-schedule rounded-3xl my-6 border border-gold-antique/20 shadow-2xl">
-        <FestSchedule />
+      {/* 6. SPACETIME SCHEDULE — MIRROR TIMELINE (CENTRAL AXIS & OPPOSING PARALLAX) */}
+      <section id="schedule-section" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 bg-deep-schedule rounded-3xl my-6 border border-[#EA580C]/20 shadow-2xl">
+        <MirrorScheduleTimeline />
       </section>
 
       {/* 7. CARD CREATION STUDIO: COSMIC TRANSMISSION STUDIO */}

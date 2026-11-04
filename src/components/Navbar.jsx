@@ -42,14 +42,14 @@ export default function Navbar({ onScrollTo, onOpenPass, onOpenRegister }) {
           <button onClick={() => handleNav('hero-section')} className="hover:text-gold transition-colors">
             01. Horizon
           </button>
-          <button onClick={() => handleNav('arenas-section')} className="hover:text-gold transition-colors">
-            02. Arenas
+          <button onClick={() => handleNav('events-section')} className="hover:text-gold transition-colors">
+            02. Events (Schrödinger)
           </button>
-          <button onClick={() => handleNav('reality-engine-section')} className="hover:text-gold transition-colors">
-            03. Reality Engine
+          <button onClick={() => handleNav('arenas-section')} className="hover:text-gold transition-colors">
+            03. Arenas (Figure/Ground)
           </button>
           <button onClick={() => handleNav('schedule-section')} className="hover:text-gold transition-colors">
-            04. Schedule
+            04. Mirror Schedule
           </button>
           <button onClick={() => handleNav('pass-section')} className="hover:text-gold transition-colors">
             05. Pass Studio
@@ -100,22 +100,22 @@ export default function Navbar({ onScrollTo, onOpenPass, onOpenRegister }) {
             <span className="text-gold mr-2">01.</span> Cinematic Horizon
           </button>
           <button
+            onClick={() => handleNav('events-section')}
+            className="block w-full text-left py-2 text-starlight-200 hover:text-gold"
+          >
+            <span className="text-gold mr-2">02.</span> Schrödinger Events Grid
+          </button>
+          <button
             onClick={() => handleNav('arenas-section')}
             className="block w-full text-left py-2 text-starlight-200 hover:text-gold"
           >
-            <span className="text-gold mr-2">02.</span> Contradiction Arenas
-          </button>
-          <button
-            onClick={() => handleNav('reality-engine-section')}
-            className="block w-full text-left py-2 text-starlight-200 hover:text-gold"
-          >
-            <span className="text-gold mr-2">03.</span> The Reality Engine
+            <span className="text-gold mr-2">03.</span> Contradiction Arenas (Figure/Ground)
           </button>
           <button
             onClick={() => handleNav('schedule-section')}
             className="block w-full text-left py-2 text-starlight-200 hover:text-gold"
           >
-            <span className="text-gold mr-2">04.</span> Spacetime Schedule
+            <span className="text-gold mr-2">04.</span> Spacetime Mirror Timeline
           </button>
           <button
             onClick={() => handleNav('pass-section')}
