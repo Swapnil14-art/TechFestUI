@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-void: #030508;
+    --bg-abyss: #060911;
+    --bg-surface: #0D121F;
+    --accent-indigo: #6366F1;
+    --accent-violet: #8B5CF6;
+    --text-starlight: #E2E8F0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+    background-color: #030508;
+  }
+
+  body {
+    background-color: var(--bg-void);
+    color: var(--text-starlight);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Cinematic Minimalist Scrollbar */
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #030508;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(99, 102, 241, 0.5);
+  }
+}
+
+/* Glass & Surface Paneling (Restrained & Architectural) */
+.glass-panel {
+  background: rgba(13, 18, 31, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-glow {
+  background: rgba(13, 18, 31, 0.78);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(99, 102, 241, 0.22);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.8), 0 0 30px rgba(99, 102, 241, 0.08);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Cinematic Atmospheric Vignette */
+.bg-radial-vignette {
+  background: radial-gradient(
+    circle at 50% 50%,
+    transparent 40%,
+    rgba(3, 5, 8, 0.65) 75%,
+    rgba(3, 5, 8, 0.95) 100%
+  );
+}
+
+/* Gravitational Accretion Ring */
+.accretion-ring {
+  border-radius: 50%;
+  border: 1.5px solid rgba(99, 102, 241, 0.6);
+  box-shadow: 
+    0 0 25px rgba(99, 102, 241, 0.4),
+    inset 0 0 25px rgba(139, 92, 246, 0.3);
+  animation: accretionSpin 30s linear infinite;
+}
+
+@keyframes accretionSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 3D Perspective Card Support */
+.perspective-card {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Subtle Holographic Shimmer */
+.hologram-shimmer {
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.04) 30%,
+    rgba(99, 102, 241, 0.18) 50%,
+    rgba(139, 92, 246, 0.18) 70%,
+    transparent 100%
+  );
+  background-size: 200% 200%;
+  animation: hologramShift 8s ease-in-out infinite;
+}
+
+@keyframes hologramShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Gravitational Cursor in Spacetime */
+#gravitational-cursor {
+  pointer-events: none;
+  position: fixed;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+}
