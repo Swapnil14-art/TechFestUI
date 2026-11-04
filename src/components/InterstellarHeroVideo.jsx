@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowRight, ShieldCheck, Sparkles, Terminal, Volume2, VolumeX } from 'lucide-react';
-import heroVideo from '../../hero/techfesthero.mp4';
+
+// Served from public/hero/ — Vercel CDN delivers it directly without bundling.
+// This bypasses Git LFS non-retrieval on Vercel builds.
+const heroVideo = '/hero/techfesthero.mp4';
 
 /**
  * Interstellar × Cosmic Mythology Hero Component
