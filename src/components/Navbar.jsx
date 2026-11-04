@@ -2,13 +2,19 @@ import React, { useState } from 'react';
 import { Menu, Sparkles, Volume2, VolumeX, X } from 'lucide-react';
 import { soundscape } from '../audio';
 
-export default function Navbar({ onScrollTo, onOpenPass, onOpenRegister }) {
+export default function Navbar({ onScrollTo, onOpenPass, onOpenRegister, audioOn, onToggleAudio }) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [audioOn, setAudioOn] = useState(false);
+  const [internalAudioOn, setInternalAudioOn] = useState(false);
+
+  const isSoundActive = audioOn !== undefined ? audioOn : internalAudioOn;
 
   const toggleSound = () => {
-    const active = soundscape.toggle();
-    setAudioOn(active);
+    if (onToggleAudio) {
+      onToggleAudio();
+    } else {
+      const active = soundscape.toggle();
+      setInternalAudioOn(active);
+    }
   };
 
   const handleNav = (id) => {
@@ -58,17 +64,17 @@ export default function Navbar({ onScrollTo, onOpenPass, onOpenRegister }) {
 
         {/* Action Tools */}
         <div className="flex items-center space-x-2 sm:space-x-3">
-          {/* Spatial Sound FX Toggle */}
+          {/* Synchronized Hero Video Audio / Sound FX Toggle */}
           <button
             onClick={toggleSound}
             className={`p-2 rounded-xl border text-xs font-mono transition-all ${
-              audioOn
+              isSoundActive
                 ? 'bg-gold/20 border-gold text-gold-bright shadow-md shadow-gold/20'
                 : 'bg-surface/70 border-white/10 text-starlight-400 hover:text-white hover:border-gold-antique/40'
             }`}
-            title="Toggle Generative Relativistic Ambience"
+            title={isSoundActive ? 'Mute Video Audio' : 'Unmute Synchronized Video Soundtrack'}
           >
-            {audioOn ? <Volume2 size={15} className="text-gold-bright animate-pulse" /> : <VolumeX size={15} />}
+            {isSoundActive ? <Volume2 size={15} className="text-gold-bright animate-pulse" /> : <VolumeX size={15} />}
           </button>
 
           {/* Mint Pass CTA */}
@@ -76,7 +82,6 @@ export default function Navbar({ onScrollTo, onOpenPass, onOpenRegister }) {
             onClick={onOpenPass}
             className="px-4 py-1.5 rounded-xl font-mono text-xs font-bold uppercase tracking-wider text-void bg-gradient-to-r from-gold-pale via-gold to-amber-molten hover:brightness-110 transition-all shadow-md hidden sm:flex items-center space-x-1.5"
           >
-            <Sparkles size={12} className="text-void" />
             <span>CLAIM PASS</span>
           </button>
 

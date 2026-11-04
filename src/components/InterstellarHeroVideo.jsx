@@ -1,16 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowDown, ArrowRight, ShieldCheck, Sparkles, Terminal } from 'lucide-react';
-import heroVideo from '../../hero/Hero_Video.mp4';
+import { ArrowDown, ArrowRight, ShieldCheck, Sparkles, Terminal, Volume2, VolumeX } from 'lucide-react';
+import heroVideo from '../../hero/techfesthero.mp4';
 
 /**
  * Interstellar × Cosmic Mythology Hero Component
- * - Fullscreen hero/Hero_Video.mp4 background with subtle grain and cinematic chiaroscuro
+ * - Fullscreen hero/techfesthero.mp4 background with subtle grain and cinematic chiaroscuro
+ * - 100% native hardware synchronized audio directly tied to video playback timestamp
  * - Sparkling micro-starlight canvas overlay with real-time gravitational lens deflection
  * - Monumental editorial typography in antique gold and prismatic highlights
  * - Live relativistic countdown HUD & NMIMS Shirpur station coordinates
  * - Functional CTAs for Explore Events and Register Now
  */
-export default function InterstellarHeroVideo({ onExploreEvents, onOpenPass }) {
+export default function InterstellarHeroVideo({
+  onExploreEvents,
+  onOpenPass,
+  isAudioActive = false,
+  onToggleAudio,
+}) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: -1000, y: -1000, radius: 160 });
@@ -31,17 +37,91 @@ export default function InterstellarHeroVideo({ onExploreEvents, onOpenPass }) {
     return () => clearInterval(timer);
   }, []);
 
-  // Ensure video autoplays muted without controls
+  // Initialize video autoplay (muted initially to respect browser autoplay policies)
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
-      video.muted = true;
+      video.muted = !isAudioActive;
       video.playsInline = true;
       const playPromise = video.play();
       if (playPromise !== undefined) {
-        playPromise.catch(() => { });
+        playPromise.catch(() => {});
       }
     }
+  }, []);
+
+  // Synchronize video audio state directly with video's native audio track
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isAudioActive) {
+      video.muted = false;
+      video.volume = 1.0;
+      if (video.paused) {
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => { });
+        }
+      }
+    } else {
+      video.muted = true;
+    }
+  }, [isAudioActive]);
+
+  // Prevent phantom audio when tab is backgrounded
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      const video = videoRef.current;
+      if (!video) return;
+      if (document.hidden) {
+        video.pause();
+      } else {
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => { });
+        }
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
+
+  // Synchronize video audio state directly with video's native audio track
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isAudioActive) {
+      video.muted = false;
+      video.volume = 1.0;
+      if (video.paused) {
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {});
+        }
+      }
+    } else {
+      video.muted = true;
+    }
+  }, [isAudioActive]);
+
+  // Prevent phantom audio when tab is backgrounded
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      const video = videoRef.current;
+      if (!video) return;
+      if (document.hidden) {
+        video.pause();
+      } else {
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {});
+        }
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
   }, []);
 
   // Interactive Crisp Starlight & Gravitational Lensing Canvas
@@ -152,7 +232,7 @@ export default function InterstellarHeroVideo({ onExploreEvents, onOpenPass }) {
           ref={videoRef}
           src={heroVideo}
           autoPlay
-          muted
+          muted={!isAudioActive}
           loop
           playsInline
           preload="auto"
@@ -184,6 +264,53 @@ export default function InterstellarHeroVideo({ onExploreEvents, onOpenPass }) {
         </div>
 
         <div className="hidden sm:flex items-center space-x-4 tracking-wider">
+          {onToggleAudio && (
+            <button
+              onClick={onToggleAudio}
+              className={`flex items-center space-x-1.5 px-3 py-1 rounded-full border transition-all pointer-events-auto cursor-pointer ${isAudioActive
+                  ? 'bg-gold/20 border-gold text-gold-bright shadow-sm shadow-gold/30'
+                  : 'glass-panel border-white/10 text-starlight-400 hover:text-white hover:border-gold/40'
+                }`}
+              title={isAudioActive ? 'Mute Video Soundtrack' : 'Unmute Synchronized Video Audio'}
+            >
+              {isAudioActive ? (
+                <>
+                  <Volume2 size={12} className="text-gold-bright animate-pulse" />
+                  <span className="text-[10px] font-bold">AUDIO ACTIVE</span>
+                </>
+              ) : (
+                <>
+                  <VolumeX size={12} />
+                  <span className="text-[10px]">SOUNDTRACK MUTED</span>
+                </>
+              )}
+            </button>
+          )}
+
+          {onToggleAudio && (
+            <button
+              onClick={onToggleAudio}
+              className={`flex items-center space-x-1.5 px-3 py-1 rounded-full border transition-all pointer-events-auto cursor-pointer ${
+                isAudioActive
+                  ? 'bg-gold/20 border-gold text-gold-bright shadow-sm shadow-gold/30'
+                  : 'glass-panel border-white/10 text-starlight-400 hover:text-white hover:border-gold/40'
+              }`}
+              title={isAudioActive ? 'Mute Video Soundtrack' : 'Unmute Synchronized Video Audio'}
+            >
+              {isAudioActive ? (
+                <>
+                  <Volume2 size={12} className="text-gold-bright animate-pulse" />
+                  <span className="text-[10px] font-bold">AUDIO ACTIVE</span>
+                </>
+              ) : (
+                <>
+                  <VolumeX size={12} />
+                  <span className="text-[10px]">SOUNDTRACK MUTED</span>
+                </>
+              )}
+            </button>
+          )}
+
           <span className="text-starlight-500">HORIZON STATUS:</span>
           <span className="text-gold-antique font-semibold flex items-center space-x-1">
             <span>SINGULARITY APEX</span>

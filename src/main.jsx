@@ -15,6 +15,11 @@ import SponsorsEcosystem from './SponsorsEcosystem';
 function App() {
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
   const [orbitAngle, setOrbitAngle] = useState(0);
+  const [audioActive, setAudioActive] = useState(false);
+
+  const handleToggleAudio = () => {
+    setAudioActive((prev) => !prev);
+  };
 
   // Relativistic Gravitational Accretion Cursor (Desktop only)
   useEffect(() => {
@@ -65,6 +70,8 @@ function App() {
         onScrollTo={scrollTo}
         onOpenPass={() => scrollTo('pass-section')}
         onOpenRegister={() => scrollTo('gateway-section')}
+        audioOn={audioActive}
+        onToggleAudio={handleToggleAudio}
       />
 
       {/* 1. CINEMATIC HERO: FULLSCREEN INTERSTELLAR VIDEO BACKGROUND */}
@@ -72,6 +79,8 @@ function App() {
         <InterstellarHeroVideo
           onExploreEvents={() => scrollTo('events-section')}
           onOpenPass={() => scrollTo('pass-section')}
+          isAudioActive={audioActive}
+          onToggleAudio={handleToggleAudio}
         />
       </div>
 
