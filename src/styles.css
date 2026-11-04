@@ -4,18 +4,20 @@
 
 @layer base {
   :root {
-    --bg-void: #030508;
-    --bg-abyss: #060911;
-    --bg-surface: #0D121F;
-    --accent-indigo: #6366F1;
-    --accent-violet: #8B5CF6;
+    --bg-void: #020408;
+    --bg-abyss: #04060C;
+    --bg-surface: #0A0E18;
+    --gold-antique: #D4AF37;
+    --gold-primary: #F59E0B;
+    --amber-molten: #F97316;
+    --indigo-celestial: #6366F1;
     --text-starlight: #E2E8F0;
   }
 
   html {
     scroll-behavior: smooth;
     color-scheme: dark;
-    background-color: #030508;
+    background-color: #020408;
   }
 
   body {
@@ -31,57 +33,129 @@
     height: 5px;
   }
   ::-webkit-scrollbar-track {
-    background: #030508;
+    background: #020408;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(212, 175, 55, 0.35);
     border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(99, 102, 241, 0.5);
+    background: rgba(245, 158, 11, 0.8);
   }
 }
 
-/* Glass & Surface Paneling (Restrained & Architectural) */
+/* Atmospheric Non-Solid Section Background Environments */
+.bg-celestial-events {
+  background-color: #04060C;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(212, 175, 55, 0.15), transparent 70%),
+    radial-gradient(circle at 10% 40%, rgba(99, 102, 241, 0.08), transparent 50%),
+    radial-gradient(circle at 90% 80%, rgba(249, 115, 22, 0.08), transparent 50%),
+    linear-gradient(to bottom, #020408, #04060C 30%, #060914 70%, #020408);
+}
+
+.bg-nebula-engine {
+  background-color: #03050A;
+  background-image:
+    radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.14), transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 20%, rgba(249, 115, 22, 0.1), transparent 55%),
+    radial-gradient(ellipse 60% 80% at 20% 80%, rgba(56, 189, 248, 0.08), transparent 55%),
+    linear-gradient(180deg, #020408 0%, #040816 50%, #020408 100%);
+}
+
+.bg-deep-schedule {
+  background-color: #030408;
+  background-image:
+    radial-gradient(ellipse 90% 60% at 50% 100%, rgba(212, 175, 55, 0.12), transparent 70%),
+    radial-gradient(circle at 30% 20%, rgba(99, 102, 241, 0.1), transparent 50%),
+    linear-gradient(to bottom, #020408 0%, #070B18 50%, #020408 100%);
+}
+
+.bg-obsidian-studio {
+  background-color: #030408;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.18), transparent 60%),
+    radial-gradient(circle at 85% 70%, rgba(139, 92, 246, 0.1), transparent 50%),
+    linear-gradient(to bottom, #020408, #080B14 50%, #020408);
+}
+
+.bg-portal-gateway {
+  background-color: #020408;
+  background-image:
+    radial-gradient(circle at 50% 30%, rgba(249, 115, 22, 0.2), transparent 65%),
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(212, 175, 55, 0.25), transparent 75%),
+    linear-gradient(to bottom, #020408 0%, #0C0818 45%, #020408 100%);
+}
+
+/* Subtle Perspective Spacetime Grid */
+.bg-spacetime-grid {
+  background-size: 64px 64px;
+  background-image:
+    linear-gradient(to right, rgba(212, 175, 55, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(212, 175, 55, 0.05) 1px, transparent 1px);
+}
+
+/* Glass & Metallic Paneling (Chiaroscuro & Titanium Borders) */
 .glass-panel {
-  background: rgba(13, 18, 31, 0.65);
+  background: rgba(10, 14, 24, 0.7);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.glass-panel-glow {
-  background: rgba(13, 18, 31, 0.78);
+.glass-panel-gold {
+  background: rgba(12, 15, 26, 0.78);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(99, 102, 241, 0.22);
-  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.8), 0 0 30px rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.9), 0 0 30px rgba(212, 175, 55, 0.08);
 }
 
-.glass-pill {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.glass-panel-amber {
+  background: rgba(12, 15, 26, 0.78);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(249, 115, 22, 0.28);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.9), 0 0 30px rgba(249, 115, 22, 0.08);
 }
 
-/* Cinematic Atmospheric Vignette */
-.bg-radial-vignette {
-  background: radial-gradient(
-    circle at 50% 50%,
-    transparent 40%,
-    rgba(3, 5, 8, 0.65) 75%,
-    rgba(3, 5, 8, 0.95) 100%
-  );
+/* Typography Gradient Shimmers */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #FFF9EB 10%, #D4AF37 50%, #F59E0B 85%, #9A7B38 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-prismatic {
+  background: linear-gradient(120deg, #F8FAFC 10%, #F59E0B 35%, #F43F5E 55%, #8B5CF6 80%, #38BDF8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Prismatic Rainbow Rim Flare */
+.prismatic-border {
+  position: relative;
+}
+.prismatic-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.5), rgba(244, 63, 94, 0.4), rgba(139, 92, 246, 0.5), rgba(56, 189, 248, 0.4));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 /* Gravitational Accretion Ring */
 .accretion-ring {
   border-radius: 50%;
-  border: 1.5px solid rgba(99, 102, 241, 0.6);
+  border: 1.5px solid rgba(212, 175, 55, 0.65);
   box-shadow: 
-    0 0 25px rgba(99, 102, 241, 0.4),
-    inset 0 0 25px rgba(139, 92, 246, 0.3);
+    0 0 25px rgba(212, 175, 55, 0.45),
+    inset 0 0 25px rgba(249, 115, 22, 0.35);
   animation: accretionSpin 30s linear infinite;
 }
 
@@ -100,18 +174,18 @@
   transform-style: preserve-3d;
 }
 
-/* Subtle Holographic Shimmer */
+/* Holographic Shimmer */
 .hologram-shimmer {
   background: linear-gradient(
     115deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.04) 30%,
-    rgba(99, 102, 241, 0.18) 50%,
-    rgba(139, 92, 246, 0.18) 70%,
+    rgba(255, 255, 255, 0.05) 30%,
+    rgba(212, 175, 55, 0.22) 50%,
+    rgba(244, 63, 94, 0.2) 70%,
     transparent 100%
   );
   background-size: 200% 200%;
-  animation: hologramShift 8s ease-in-out infinite;
+  animation: hologramShift 7s ease-in-out infinite;
 }
 
 @keyframes hologramShift {
@@ -120,7 +194,7 @@
   100% { background-position: 0% 50%; }
 }
 
-/* Gravitational Cursor in Spacetime */
+/* Gravitational Cursor */
 #gravitational-cursor {
   pointer-events: none;
   position: fixed;

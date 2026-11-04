@@ -5,13 +5,27 @@ export default {
   theme: {
     extend: {
       colors: {
-        void: "#030508",
-        abyss: "#060911",
-        surface: "#0D121F",
+        void: "#020408",
+        abyss: "#04060C",
+        surface: "#0A0E18",
         border: "rgba(255, 255, 255, 0.08)",
+        gold: {
+          antique: "#D4AF37",
+          DEFAULT: "#F59E0B",
+          bright: "#FBBF24",
+          bronze: "#9A7B38",
+          deep: "#785818",
+          pale: "#FEF3C7",
+        },
+        amber: {
+          molten: "#F97316",
+          flare: "#FF5416",
+          glow: "#FB923C",
+        },
         indigo: {
-          900: "#0F172A",
-          800: "#1E2538",
+          950: "#050814",
+          900: "#0A0F24",
+          800: "#101838",
           DEFAULT: "#312E81",
           light: "#6366F1",
           accent: "#818CF8",
