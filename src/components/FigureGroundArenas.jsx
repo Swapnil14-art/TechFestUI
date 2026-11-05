@@ -36,189 +36,218 @@ export default function FigureGroundArenas({ onSelectTrack }) {
         </div>
       </div>
 
-      {/* FIGURE / GROUND GRID CONTAINER */}
-      <div className="relative p-4 sm:p-8 rounded-3xl bg-[#04060C] border border-white/10 overflow-hidden shadow-2xl">
-        {/* Background Hidden Negative Space Symbol (Illuminates when cards are hovered) */}
+      {/* FIGURE / GROUND GRID CONTAINER (Scrollable Landscape Viewport on Mobile, Native Grid on Laptop) */}
+      <div className="relative p-3 sm:p-8 rounded-3xl bg-[#04060C] border border-white/10 overflow-hidden shadow-2xl">
+        {/* Background Hidden Negative Space Symbol (Illuminates on hover or tap) */}
         <div
           className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-all duration-700 ${
-            hoveredArena !== null ? 'opacity-90 scale-105' : 'opacity-20 scale-100'
+            hoveredArena !== null ? 'opacity-90 scale-105' : 'opacity-25 scale-100'
           }`}
         >
           {/* Luminous Giant Infinity & P Monogram in Negative Space */}
-          <div className="w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-amber-molten/15 via-gold/25 to-violet/15 blur-3xl" />
-          <div className="absolute font-cinzel font-black text-[18vw] text-gold-antique/10 select-none tracking-tighter">
+          <div className="w-[320px] sm:w-[500px] h-[320px] sm:h-[500px] rounded-full bg-gradient-to-tr from-amber-molten/15 via-gold/25 to-violet/15 blur-3xl" />
+          <div className="absolute font-cinzel font-black text-[28vw] md:text-[18vw] text-gold-antique/10 select-none tracking-tighter">
             ∞
           </div>
         </div>
 
-        {/* Modular Grid of Warm Ivory Cards with Deliberate Negative-Space Voids */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 relative z-10">
-          {/* Card 1: Hackathon (Spans 2 columns on desktop) */}
-          <div
-            onMouseEnter={() => setHoveredArena('singularity')}
-            onMouseLeave={() => setHoveredArena(null)}
-            onClick={() => setSelectedArena(COMPETITIONS[0])}
-            className="md:col-span-2 rounded-2xl p-6 sm:p-8 bg-[#E5E2D9] hover:bg-[#EDEAE1] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group"
-          >
-            <div>
-              <div className="flex items-center justify-between font-mono text-[10px] text-[#4A5568] uppercase tracking-wider mb-3">
-                <span className="px-2.5 py-0.5 rounded-full bg-black/10 font-bold">
-                  {COMPETITIONS[0].tag}
-                </span>
-                <span className="font-bold text-[#0A0D15]">FLAGSHIP // 01</span>
-              </div>
-              <h3 className="font-cinzel font-bold text-2xl sm:text-3xl uppercase tracking-wide text-[#0A0D15] group-hover:text-[#B45309] transition-colors">
-                {COMPETITIONS[0].title}
-              </h3>
-              <p className="font-serif italic text-xs text-[#78350F] mt-1 font-semibold">
-                "{COMPETITIONS[0].paradox}"
-              </p>
-              <p className="font-sans text-xs text-[#2D3748] mt-3 line-clamp-2 font-light">
-                {COMPETITIONS[0].description}
-              </p>
-            </div>
-            <div className="mt-6 pt-4 border-t border-black/10 flex items-center justify-between font-mono text-xs">
+        {/* Mobile Horizontal Scroll Hint */}
+        <div className="md:hidden flex items-center justify-between pb-3 px-1 text-[10px] font-mono text-starlight-400">
+          <span className="flex items-center space-x-1.5 text-amber-molten">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-molten animate-ping" />
+            <span>GESTALT HORIZONTAL MOSAIC</span>
+          </span>
+          <span className="text-[9px] text-starlight-500 uppercase tracking-widest">
+            SWIPE HORIZONTALLY →
+          </span>
+        </div>
+
+        {/* Horizontal Scroll wrapper for phones, clean responsive grid on tablet/laptop */}
+        <div className="overflow-x-auto pb-4 md:pb-0 scrollbar-thin scrollbar-thumb-amber-molten/30 -mx-1 px-1">
+          {/* Multi-column mosaic layout preserved on all devices (min 860px on mobile to guarantee laptop landscape layout) */}
+          <div className="grid grid-cols-4 gap-4 sm:gap-6 relative z-10 min-w-[860px] md:min-w-0">
+            {/* Card 1: Hackathon (Spans 2 columns) */}
+            <div
+              onMouseEnter={() => setHoveredArena('singularity')}
+              onMouseLeave={() => setHoveredArena(null)}
+              onClick={() => {
+                setHoveredArena((prev) => (prev === 'singularity' ? null : 'singularity'));
+                setSelectedArena(COMPETITIONS[0]);
+              }}
+              className="col-span-2 rounded-2xl p-5 sm:p-8 bg-[#E5E2D9] hover:bg-[#EDEAE1] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group"
+            >
               <div>
-                <span className="text-[9px] text-[#718096] block uppercase tracking-wider">BOUNTY</span>
-                <span className="font-bold text-[#0A0D15] text-base">{COMPETITIONS[0].bounty}</span>
+                <div className="flex items-center justify-between font-mono text-[10px] text-[#4A5568] uppercase tracking-wider mb-3">
+                  <span className="px-2.5 py-0.5 rounded-full bg-black/10 font-bold">
+                    {COMPETITIONS[0].tag}
+                  </span>
+                  <span className="font-bold text-[#0A0D15]">FLAGSHIP // 01</span>
+                </div>
+                <h3 className="font-cinzel font-bold text-xl sm:text-3xl uppercase tracking-wide text-[#0A0D15] group-hover:text-[#B45309] transition-colors">
+                  {COMPETITIONS[0].title}
+                </h3>
+                <p className="font-serif italic text-xs text-[#78350F] mt-1 font-semibold">
+                  "{COMPETITIONS[0].paradox}"
+                </p>
+                <p className="font-sans text-xs text-[#2D3748] mt-3 line-clamp-2 font-light">
+                  {COMPETITIONS[0].description}
+                </p>
               </div>
-              <div className="w-8 h-8 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all">
-                <ArrowUpRight size={14} />
+              <div className="mt-5 sm:mt-6 pt-4 border-t border-black/10 flex items-center justify-between font-mono text-xs">
+                <div>
+                  <span className="text-[9px] text-[#718096] block uppercase tracking-wider">BOUNTY</span>
+                  <span className="font-bold text-[#0A0D15] text-sm sm:text-base">{COMPETITIONS[0].bounty}</span>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all">
+                  <ArrowUpRight size={14} />
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Card 2: Robotics (Single Column) */}
-          <div
-            onMouseEnter={() => setHoveredArena('robotics')}
-            onMouseLeave={() => setHoveredArena(null)}
-            onClick={() => setSelectedArena(COMPETITIONS[1])}
-            className="rounded-2xl p-6 bg-[#D8D5CC] hover:bg-[#E3DFD5] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group"
-          >
-            <div>
-              <div className="flex items-center justify-between font-mono text-[10px] text-[#4A5568] uppercase tracking-wider mb-3">
-                <span className="px-2 py-0.5 rounded-full bg-black/10 font-bold">
-                  {COMPETITIONS[1].tag}
-                </span>
-                <span>02</span>
-              </div>
-              <h3 className="font-cinzel font-bold text-xl uppercase tracking-wide text-[#0A0D15] group-hover:text-[#B45309] transition-colors">
-                {COMPETITIONS[1].title}
-              </h3>
-              <p className="font-serif italic text-xs text-[#78350F] mt-1 font-semibold">
-                "{COMPETITIONS[1].paradox}"
-              </p>
-            </div>
-            <div className="mt-6 pt-4 border-t border-black/10 flex items-center justify-between font-mono text-xs">
-              <span className="font-bold text-[#0A0D15]">{COMPETITIONS[1].bounty}</span>
-              <div className="w-7 h-7 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all">
-                <ArrowUpRight size={13} />
-              </div>
-            </div>
-          </div>
-
-          {/* DELIBERATE NEGATIVE SPACE CELL (The Ground Silhouette) */}
-          <div className="hidden lg:flex rounded-2xl border border-dashed border-amber-molten/30 p-6 flex-col items-center justify-center text-center font-mono text-xs text-starlight-400 bg-void/50 backdrop-blur-sm">
-            <span className="text-[10px] text-amber-molten tracking-widest uppercase font-bold">
-              NEGATIVE HORIZON
-            </span>
-            <div className="font-cinzel font-black text-2xl text-gradient-gold my-1">
-              PARADOX
-            </div>
-            <span className="text-[9px] text-starlight-500 uppercase tracking-widest">
-              NMIMS SHIRPUR '26
-            </span>
-          </div>
-
-          {/* Card 3: Cryptographic CTF */}
-          <div
-            onMouseEnter={() => setHoveredArena('cipher')}
-            onMouseLeave={() => setHoveredArena(null)}
-            onClick={() => setSelectedArena(COMPETITIONS[2])}
-            className="rounded-2xl p-6 bg-[#D8D5CC] hover:bg-[#E3DFD5] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group"
-          >
-            <div>
-              <div className="flex items-center justify-between font-mono text-[10px] text-[#4A5568] uppercase tracking-wider mb-3">
-                <span className="px-2 py-0.5 rounded-full bg-black/10 font-bold">
-                  {COMPETITIONS[2].tag}
-                </span>
-                <span>03</span>
-              </div>
-              <h3 className="font-cinzel font-bold text-xl uppercase tracking-wide text-[#0A0D15] group-hover:text-[#B45309] transition-colors">
-                {COMPETITIONS[2].title}
-              </h3>
-              <p className="font-serif italic text-xs text-[#78350F] mt-1 font-semibold">
-                "{COMPETITIONS[2].paradox}"
-              </p>
-            </div>
-            <div className="mt-6 pt-4 border-t border-black/10 flex items-center justify-between font-mono text-xs">
-              <span className="font-bold text-[#0A0D15]">{COMPETITIONS[2].bounty}</span>
-              <div className="w-7 h-7 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all">
-                <ArrowUpRight size={13} />
-              </div>
-            </div>
-          </div>
-
-          {/* Card 4: Design Arena */}
-          <div
-            onMouseEnter={() => setHoveredArena('design')}
-            onMouseLeave={() => setHoveredArena(null)}
-            onClick={() => setSelectedArena(COMPETITIONS[3])}
-            className="rounded-2xl p-6 bg-[#D8D5CC] hover:bg-[#E3DFD5] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group"
-          >
-            <div>
-              <div className="flex items-center justify-between font-mono text-[10px] text-[#4A5568] uppercase tracking-wider mb-3">
-                <span className="px-2 py-0.5 rounded-full bg-black/10 font-bold">
-                  {COMPETITIONS[3].tag}
-                </span>
-                <span>04</span>
-              </div>
-              <h3 className="font-cinzel font-bold text-xl uppercase tracking-wide text-[#0A0D15] group-hover:text-[#B45309] transition-colors">
-                {COMPETITIONS[3].title}
-              </h3>
-              <p className="font-serif italic text-xs text-[#78350F] mt-1 font-semibold">
-                "{COMPETITIONS[3].paradox}"
-              </p>
-            </div>
-            <div className="mt-6 pt-4 border-t border-black/10 flex items-center justify-between font-mono text-xs">
-              <span className="font-bold text-[#0A0D15]">{COMPETITIONS[3].bounty}</span>
-              <div className="w-7 h-7 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all">
-                <ArrowUpRight size={13} />
-              </div>
-            </div>
-          </div>
-
-          {/* Card 5: Esports (Spans 2 columns) */}
-          <div
-            onMouseEnter={() => setHoveredArena('esports')}
-            onMouseLeave={() => setHoveredArena(null)}
-            onClick={() => setSelectedArena(COMPETITIONS[4])}
-            className="md:col-span-2 rounded-2xl p-6 sm:p-8 bg-[#E5E2D9] hover:bg-[#EDEAE1] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group"
-          >
-            <div>
-              <div className="flex items-center justify-between font-mono text-[10px] text-[#4A5568] uppercase tracking-wider mb-3">
-                <span className="px-2.5 py-0.5 rounded-full bg-black/10 font-bold">
-                  {COMPETITIONS[4].tag}
-                </span>
-                <span className="font-bold text-[#0A0D15]">LAN STAGE // 05</span>
-              </div>
-              <h3 className="font-cinzel font-bold text-2xl sm:text-3xl uppercase tracking-wide text-[#0A0D15] group-hover:text-[#B45309] transition-colors">
-                {COMPETITIONS[4].title}
-              </h3>
-              <p className="font-serif italic text-xs text-[#78350F] mt-1 font-semibold">
-                "{COMPETITIONS[4].paradox}"
-              </p>
-              <p className="font-sans text-xs text-[#2D3748] mt-3 line-clamp-2 font-light">
-                {COMPETITIONS[4].description}
-              </p>
-            </div>
-            <div className="mt-6 pt-4 border-t border-black/10 flex items-center justify-between font-mono text-xs">
+            {/* Card 2: Robotics (Single Column) */}
+            <div
+              onMouseEnter={() => setHoveredArena('robotics')}
+              onMouseLeave={() => setHoveredArena(null)}
+              onClick={() => {
+                setHoveredArena((prev) => (prev === 'robotics' ? null : 'robotics'));
+                setSelectedArena(COMPETITIONS[1]);
+              }}
+              className="col-span-1 rounded-2xl p-5 sm:p-6 bg-[#D8D5CC] hover:bg-[#E3DFD5] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group"
+            >
               <div>
-                <span className="text-[9px] text-[#718096] block uppercase tracking-wider">PRIZE BOUNTY</span>
-                <span className="font-bold text-[#0A0D15] text-base">{COMPETITIONS[4].bounty}</span>
+                <div className="flex items-center justify-between font-mono text-[10px] text-[#4A5568] uppercase tracking-wider mb-3">
+                  <span className="px-2 py-0.5 rounded-full bg-black/10 font-bold">
+                    {COMPETITIONS[1].tag}
+                  </span>
+                  <span>02</span>
+                </div>
+                <h3 className="font-cinzel font-bold text-base sm:text-xl uppercase tracking-wide text-[#0A0D15] group-hover:text-[#B45309] transition-colors">
+                  {COMPETITIONS[1].title}
+                </h3>
+                <p className="font-serif italic text-xs text-[#78350F] mt-1 font-semibold">
+                  "{COMPETITIONS[1].paradox}"
+                </p>
               </div>
-              <div className="w-8 h-8 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all">
-                <ArrowUpRight size={14} />
+              <div className="mt-4 sm:mt-6 pt-4 border-t border-black/10 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#0A0D15] text-xs sm:text-sm">{COMPETITIONS[1].bounty}</span>
+                <div className="w-7 h-7 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all">
+                  <ArrowUpRight size={13} />
+                </div>
+              </div>
+            </div>
+
+            {/* DELIBERATE NEGATIVE SPACE CELL (The Ground Silhouette - Visible on all devices) */}
+            <div className="col-span-1 rounded-2xl border border-dashed border-amber-molten/40 p-5 flex flex-col items-center justify-center text-center font-mono text-xs text-starlight-300 bg-void/60 backdrop-blur-md">
+              <span className="text-[10px] text-amber-molten tracking-widest uppercase font-bold">
+                NEGATIVE HORIZON
+              </span>
+              <div className="font-cinzel font-black text-xl sm:text-2xl text-gradient-gold my-1.5">
+                PARADOX
+              </div>
+              <span className="text-[9px] text-starlight-500 uppercase tracking-widest">
+                NMIMS SHIRPUR '26
+              </span>
+            </div>
+
+            {/* Card 3: Cryptographic CTF */}
+            <div
+              onMouseEnter={() => setHoveredArena('cipher')}
+              onMouseLeave={() => setHoveredArena(null)}
+              onClick={() => {
+                setHoveredArena((prev) => (prev === 'cipher' ? null : 'cipher'));
+                setSelectedArena(COMPETITIONS[2]);
+              }}
+              className="col-span-1 rounded-2xl p-5 sm:p-6 bg-[#D8D5CC] hover:bg-[#E3DFD5] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group"
+            >
+              <div>
+                <div className="flex items-center justify-between font-mono text-[10px] text-[#4A5568] uppercase tracking-wider mb-3">
+                  <span className="px-2 py-0.5 rounded-full bg-black/10 font-bold">
+                    {COMPETITIONS[2].tag}
+                  </span>
+                  <span>03</span>
+                </div>
+                <h3 className="font-cinzel font-bold text-base sm:text-xl uppercase tracking-wide text-[#0A0D15] group-hover:text-[#B45309] transition-colors">
+                  {COMPETITIONS[2].title}
+                </h3>
+                <p className="font-serif italic text-xs text-[#78350F] mt-1 font-semibold">
+                  "{COMPETITIONS[2].paradox}"
+                </p>
+              </div>
+              <div className="mt-4 sm:mt-6 pt-4 border-t border-black/10 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#0A0D15] text-xs sm:text-sm">{COMPETITIONS[2].bounty}</span>
+                <div className="w-7 h-7 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all">
+                  <ArrowUpRight size={13} />
+                </div>
+              </div>
+            </div>
+
+            {/* Card 4: Design Arena */}
+            <div
+              onMouseEnter={() => setHoveredArena('design')}
+              onMouseLeave={() => setHoveredArena(null)}
+              onClick={() => {
+                setHoveredArena((prev) => (prev === 'design' ? null : 'design'));
+                setSelectedArena(COMPETITIONS[3]);
+              }}
+              className="col-span-1 rounded-2xl p-5 sm:p-6 bg-[#D8D5CC] hover:bg-[#E3DFD5] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group"
+            >
+              <div>
+                <div className="flex items-center justify-between font-mono text-[10px] text-[#4A5568] uppercase tracking-wider mb-3">
+                  <span className="px-2 py-0.5 rounded-full bg-black/10 font-bold">
+                    {COMPETITIONS[3].tag}
+                  </span>
+                  <span>04</span>
+                </div>
+                <h3 className="font-cinzel font-bold text-base sm:text-xl uppercase tracking-wide text-[#0A0D15] group-hover:text-[#B45309] transition-colors">
+                  {COMPETITIONS[3].title}
+                </h3>
+                <p className="font-serif italic text-xs text-[#78350F] mt-1 font-semibold">
+                  "{COMPETITIONS[3].paradox}"
+                </p>
+              </div>
+              <div className="mt-4 sm:mt-6 pt-4 border-t border-black/10 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-[#0A0D15] text-xs sm:text-sm">{COMPETITIONS[3].bounty}</span>
+                <div className="w-7 h-7 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all">
+                  <ArrowUpRight size={13} />
+                </div>
+              </div>
+            </div>
+
+            {/* Card 5: Esports (Spans 2 columns) */}
+            <div
+              onMouseEnter={() => setHoveredArena('esports')}
+              onMouseLeave={() => setHoveredArena(null)}
+              onClick={() => {
+                setHoveredArena((prev) => (prev === 'esports' ? null : 'esports'));
+                setSelectedArena(COMPETITIONS[4]);
+              }}
+              className="col-span-2 rounded-2xl p-5 sm:p-8 bg-[#E5E2D9] hover:bg-[#EDEAE1] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group"
+            >
+              <div>
+                <div className="flex items-center justify-between font-mono text-[10px] text-[#4A5568] uppercase tracking-wider mb-3">
+                  <span className="px-2.5 py-0.5 rounded-full bg-black/10 font-bold">
+                    {COMPETITIONS[4].tag}
+                  </span>
+                  <span className="font-bold text-[#0A0D15]">LAN STAGE // 05</span>
+                </div>
+                <h3 className="font-cinzel font-bold text-xl sm:text-3xl uppercase tracking-wide text-[#0A0D15] group-hover:text-[#B45309] transition-colors">
+                  {COMPETITIONS[4].title}
+                </h3>
+                <p className="font-serif italic text-xs text-[#78350F] mt-1 font-semibold">
+                  "{COMPETITIONS[4].paradox}"
+                </p>
+                <p className="font-sans text-xs text-[#2D3748] mt-3 line-clamp-2 font-light">
+                  {COMPETITIONS[4].description}
+                </p>
+              </div>
+              <div className="mt-5 sm:mt-6 pt-4 border-t border-black/10 flex items-center justify-between font-mono text-xs">
+                <div>
+                  <span className="text-[9px] text-[#718096] block uppercase tracking-wider">PRIZE BOUNTY</span>
+                  <span className="font-bold text-[#0A0D15] text-sm sm:text-base">{COMPETITIONS[4].bounty}</span>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all">
+                  <ArrowUpRight size={14} />
+                </div>
               </div>
             </div>
           </div>

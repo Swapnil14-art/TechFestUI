@@ -120,15 +120,15 @@ export default function HilbertsHotel({ onRegisterPass, onSelectWorkshop }) {
             </div>
 
             {/* A. Sold-out registration banner with contrasting CTA */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 bg-[#121622] p-4 sm:p-5 rounded-xl border border-[#2A3144] shrink-0">
-              <div className="pr-2 sm:pr-4 sm:border-r sm:border-[#2A3144]">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 bg-[#121622] p-3.5 sm:p-5 rounded-xl border border-[#2A3144] shrink-0">
+              <div className="pr-2 sm:pr-4 sm:border-r sm:border-[#2A3144] flex items-center justify-between sm:block">
                 <div className="flex items-center space-x-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#EF4444] animate-ping" />
-                  <span className="font-mono font-black text-lg sm:text-xl text-[#F87171] tracking-wider">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#EF4444] animate-ping shrink-0" />
+                  <span className="font-mono font-black text-base sm:text-xl text-[#F87171] tracking-wider">
                     {hasJoined ? 'PARADOX EXPANDED' : 'SOLD OUT'}
                   </span>
                 </div>
-                <span className="font-mono text-xs text-[#9CA3AF] block mt-0.5 tracking-wide">
+                <span className="font-mono text-[10px] sm:text-xs text-[#9CA3AF] block sm:mt-0.5 tracking-wide">
                   {hasJoined ? `All ∞ + ${shiftCount} slots filled` : 'All ∞ slots taken'}
                 </span>
               </div>
@@ -136,7 +136,7 @@ export default function HilbertsHotel({ onRegisterPass, onSelectWorkshop }) {
               <button
                 onClick={handleJoinAnyway}
                 disabled={isShifting}
-                className="px-6 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider bg-[#EA580C] hover:bg-[#F97316] active:scale-95 text-white transition-all shadow-lg shadow-[#EA580C]/25 flex items-center justify-center space-x-2 cursor-pointer border border-[#FB923C]/40 group"
+                className="w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider bg-[#EA580C] hover:bg-[#F97316] active:scale-95 text-white transition-all shadow-lg shadow-[#EA580C]/25 flex items-center justify-center space-x-2 cursor-pointer border border-[#FB923C]/40 group"
               >
                 <UserPlus size={14} className="group-hover:rotate-12 transition-transform" />
                 <span>{hasJoined ? 'SHIFT & ENTER AGAIN' : 'JOIN ANYWAY'}</span>
@@ -163,63 +163,72 @@ export default function HilbertsHotel({ onRegisterPass, onSelectWorkshop }) {
             </div>
           )}
 
-          {/* B. Infinite Room Grid (Responsive 2 to 6 columns) */}
+          {/* B. Infinite Room Grid (Responsive 2 to 6 columns, with horizontal landscape support on mobile) */}
           <div>
-            <div className="flex items-center justify-between mb-4">
-              <span className="font-mono text-[11px] text-[#718096] uppercase tracking-wider">
+            <div className="flex flex-wrap items-center justify-between mb-4 gap-2">
+              <span className="font-mono text-[10px] sm:text-[11px] text-[#718096] uppercase tracking-wider">
                 CORRIDOR ROOM ASSIGNMENTS (CARDINALITY ℵ₀)
               </span>
-              <span className="font-mono text-[11px] text-[#A0AEC0] flex items-center space-x-1.5">
+              <span className="font-mono text-[10px] sm:text-[11px] text-[#A0AEC0] flex items-center space-x-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#EA580C] inline-block" />
                 <span>Active Occupant = YOU</span>
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
+            {/* Room grid: 2 cols on smallest mobile, 3 on larger mobile, 4 on tablet, 6 on desktop */}
+            <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5 sm:gap-4">
               {/* Room 1: If joined, this is YOU! If not joined, initial occupant #1 */}
               <div
                 onClick={() => setSelectedRoom(1)}
-                className={`rounded-xl p-4 transition-all duration-500 flex flex-col justify-between min-h-[110px] cursor-pointer border relative overflow-hidden select-none ${hasJoined
+                className={`rounded-xl p-3 sm:p-4 transition-all duration-500 flex flex-col justify-between min-h-[105px] sm:min-h-[110px] cursor-pointer border relative overflow-hidden select-none active:scale-95 ${
+                  hasJoined
                     ? 'bg-[#EA580C] border-[#FB923C] text-white shadow-xl shadow-[#EA580C]/30 scale-[1.02]'
                     : 'bg-[#12151F] border-[#222736] hover:border-[#384055] text-[#E2E8F0]'
-                  }`}
+                }`}
               >
                 <div className="flex items-center justify-between">
                   <span
-                    className={`font-mono text-base sm:text-lg font-black tracking-tight ${hasJoined ? 'text-white' : 'text-[#F4EFE6]'
-                      }`}
+                    className={`font-mono text-base sm:text-lg font-black tracking-tight ${
+                      hasJoined ? 'text-white' : 'text-[#F4EFE6]'
+                    }`}
                   >
                     #1
                   </span>
                   {hasJoined ? (
-                    <span className="px-2 py-0.5 rounded-full bg-white text-[#EA580C] font-mono text-[10px] font-black tracking-widest uppercase shadow">
+                    <span className="px-1.5 py-0.5 rounded-full bg-white text-[#EA580C] font-mono text-[9px] font-black tracking-widest uppercase shadow">
                       YOU
                     </span>
                   ) : (
-                    <span className="font-mono text-[10px] text-[#718096] uppercase">
+                    <span className="font-mono text-[9px] text-[#718096] uppercase">
                       OCCUPIED
                     </span>
                   )}
                 </div>
 
-                <div className="mt-2">
+                <div className="mt-1.5">
                   <span
-                    className={`block font-sans text-xs font-semibold truncate ${hasJoined ? 'text-white' : 'text-[#CBD5E1]'
-                      }`}
+                    className={`block font-sans text-[11px] sm:text-xs font-semibold truncate ${
+                      hasJoined ? 'text-white' : 'text-[#CBD5E1]'
+                    }`}
                   >
                     {hasJoined ? 'You (New Entrant)' : INITIAL_GUESTS[0].name}
                   </span>
                   <span
-                    className={`block font-mono text-[10px] truncate mt-0.5 ${hasJoined ? 'text-white/80' : 'text-[#718096]'
-                      }`}
+                    className={`block font-mono text-[9px] sm:text-[10px] truncate mt-0.5 ${
+                      hasJoined ? 'text-white/80' : 'text-[#718096]'
+                    }`}
                   >
                     {hasJoined ? 'Track: Reserved' : `Track: ${INITIAL_GUESTS[0].track}`}
                   </span>
                 </div>
 
-                {hasJoined && (
-                  <div className="mt-1 font-mono text-[9px] text-white/90 font-medium">
+                {hasJoined ? (
+                  <div className="mt-1 font-mono text-[8px] text-white/90 font-medium">
                     Allocated via shift
+                  </div>
+                ) : (
+                  <div className="mt-1 font-mono text-[8px] text-[#718096]">
+                    Slot 1 / ∞
                   </div>
                 )}
               </div>
@@ -227,9 +236,8 @@ export default function HilbertsHotel({ onRegisterPass, onSelectWorkshop }) {
               {/* Rooms 2 through 11 */}
               {INITIAL_GUESTS.slice(1).map((guest, idx) => {
                 const roomNumber = idx + 2;
-                // If hasJoined is true, this room now holds the guest who was in roomNumber - 1
                 const occupant = hasJoined
-                  ? INITIAL_GUESTS[idx] // The previous guest shifted here!
+                  ? INITIAL_GUESTS[idx]
                   : guest;
 
                 const wasRoom = hasJoined ? roomNumber - 1 : null;
@@ -238,36 +246,41 @@ export default function HilbertsHotel({ onRegisterPass, onSelectWorkshop }) {
                   <div
                     key={roomNumber}
                     onClick={() => setSelectedRoom(roomNumber)}
-                    className={`rounded-xl p-4 transition-all duration-500 flex flex-col justify-between min-h-[110px] cursor-pointer border relative select-none bg-[#12151F] border-[#222736] hover:border-[#384055] hover:bg-[#161A26] text-[#E2E8F0] ${isShifting ? 'translate-x-1 opacity-70' : 'translate-x-0 opacity-100'
-                      }`}
+                    className={`rounded-xl p-3 sm:p-4 transition-all duration-500 flex flex-col justify-between min-h-[105px] sm:min-h-[110px] cursor-pointer border relative select-none bg-[#12151F] border-[#222736] hover:border-[#384055] hover:bg-[#161A26] text-[#E2E8F0] active:scale-95 ${
+                      isShifting ? 'translate-x-1 opacity-70' : 'translate-x-0 opacity-100'
+                    }`}
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-mono text-base sm:text-lg font-bold text-[#F4EFE6]">
                         #{roomNumber}
                       </span>
                       {wasRoom !== null ? (
-                        <span className="px-1.5 py-0.5 rounded bg-[#EA580C]/15 border border-[#EA580C]/30 text-[#FB923C] font-mono text-[9px] font-semibold">
+                        <span className="px-1.5 py-0.5 rounded bg-[#EA580C]/20 border border-[#EA580C]/40 text-[#FB923C] font-mono text-[8px] sm:text-[9px] font-bold">
                           was #{wasRoom}
                         </span>
                       ) : (
-                        <span className="font-mono text-[10px] text-[#64748B] uppercase">
+                        <span className="font-mono text-[9px] text-[#64748B] uppercase">
                           OCCUPIED
                         </span>
                       )}
                     </div>
 
-                    <div className="mt-2">
-                      <span className="block font-sans text-xs font-medium text-[#CBD5E1] truncate">
+                    <div className="mt-1.5">
+                      <span className="block font-sans text-[11px] sm:text-xs font-medium text-[#CBD5E1] truncate">
                         {occupant.name}
                       </span>
-                      <span className="block font-mono text-[10px] text-[#718096] truncate mt-0.5">
+                      <span className="block font-mono text-[9px] sm:text-[10px] text-[#718096] truncate mt-0.5">
                         Track: {occupant.track}
                       </span>
                     </div>
 
-                    {wasRoom !== null && (
-                      <div className="mt-1 font-mono text-[9px] text-[#A0AEC0]">
+                    {wasRoom !== null ? (
+                      <div className="mt-1 font-mono text-[8px] text-[#A0AEC0]">
                         Shifted {wasRoom} → {roomNumber}
+                      </div>
+                    ) : (
+                      <div className="mt-1 font-mono text-[8px] text-[#718096]">
+                        Slot {roomNumber} / ∞
                       </div>
                     )}
                   </div>
@@ -277,27 +290,27 @@ export default function HilbertsHotel({ onRegisterPass, onSelectWorkshop }) {
               {/* Special Room #∞ Card */}
               <div
                 onClick={() => setSelectedRoom('infinity')}
-                className="rounded-xl p-4 border border-[#EA580C]/30 bg-[#14121B] hover:bg-[#1A1624] flex flex-col justify-between min-h-[110px] cursor-pointer relative overflow-hidden select-none transition-all group"
+                className="rounded-xl p-3 sm:p-4 border border-[#EA580C]/35 bg-[#14121B] hover:bg-[#1A1624] flex flex-col justify-between min-h-[105px] sm:min-h-[110px] cursor-pointer relative overflow-hidden select-none transition-all group active:scale-95"
               >
                 <div className="flex items-center justify-between">
                   <span className="font-cinzel text-xl sm:text-2xl font-black text-[#FB923C] group-hover:scale-110 transition-transform">
                     #∞
                   </span>
-                  <span className="px-2 py-0.5 rounded-full bg-[#EA580C]/20 border border-[#EA580C]/40 text-[#FB923C] font-mono text-[9px] font-bold uppercase">
+                  <span className="px-1.5 py-0.5 rounded-full bg-[#EA580C]/20 border border-[#EA580C]/40 text-[#FB923C] font-mono text-[8px] sm:text-[9px] font-bold uppercase">
                     CONTINUUM
                   </span>
                 </div>
 
-                <div className="mt-2">
-                  <span className="block font-sans text-xs font-semibold text-[#F4EFE6]">
+                <div className="mt-1.5">
+                  <span className="block font-sans text-[11px] sm:text-xs font-semibold text-[#F4EFE6] truncate">
                     Infinite Continuum
                   </span>
-                  <span className="block font-mono text-[10px] text-[#EA580C]/80 mt-0.5">
-                    {hasJoined ? 'n → n+1 to infinity' : 'Rooms continue indefinitely'}
+                  <span className="block font-mono text-[9px] sm:text-[10px] text-[#EA580C]/80 mt-0.5 truncate">
+                    {hasJoined ? 'n → n+1 to infinity' : 'Rooms continue forever'}
                   </span>
                 </div>
 
-                <div className="mt-1 font-mono text-[9px] text-[#718096]">
+                <div className="mt-1 font-mono text-[8px] text-[#718096]">
                   Cardinality ℵ₀ boundless
                 </div>
               </div>

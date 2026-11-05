@@ -15,18 +15,30 @@ export default function SchrodingerEventsGrid({ onSelectTrack }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [activeCategory, setActiveCategory] = useState('all');
 
-  const toggleObserveMobile = (id) => {
-    setObservedCards((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+  // Pure tap-to-observe: tap to observe, tap again to unobserve, tap another card collapses previous
+  const handleCardTap = (id) => {
+    setObservedCards((prev) => {
+      const isCurrentlyObserved = !!prev[id];
+      // If tapping the already observed card, collapse it back into superposition
+      if (isCurrentlyObserved) {
+        return {};
+      }
+      // Collapse wave-function exclusively to the tapped card
+      return { [id]: true };
+    });
   };
 
-  const setHoverState = (id, isHovered) => {
-    setObservedCards((prev) => ({
-      ...prev,
-      [id]: isHovered,
-    }));
+  const handleMouseEnter = (id) => {
+    // Only apply hover state if user has a true hovering device
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      setObservedCards({ [id]: true });
+    }
+  };
+
+  const handleMouseLeave = (id) => {
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      setObservedCards({});
+    }
   };
 
   const filtered =
@@ -85,12 +97,12 @@ export default function SchrodingerEventsGrid({ onSelectTrack }) {
             <div
               key={item.id}
               tabIndex={0}
-              onMouseEnter={() => setHoverState(item.id, true)}
-              onMouseLeave={() => setHoverState(item.id, false)}
-              onFocus={() => setHoverState(item.id, true)}
-              onBlur={() => setHoverState(item.id, false)}
-              onClick={() => toggleObserveMobile(item.id)}
-              className={`relative rounded-2xl p-6 sm:p-7 transition-all duration-500 cursor-pointer overflow-hidden border ${
+              onMouseEnter={() => handleMouseEnter(item.id)}
+              onMouseLeave={() => handleMouseLeave(item.id)}
+              onFocus={() => handleMouseEnter(item.id)}
+              onBlur={() => handleMouseLeave(item.id)}
+              onClick={() => handleCardTap(item.id)}
+              className={`relative rounded-2xl p-5 sm:p-7 transition-all duration-500 cursor-pointer overflow-hidden border select-none ${
                 isObserved
                   ? 'bg-[#0E131F] border-[#EA580C] shadow-[0_0_35px_rgba(234,88,12,0.22)] -translate-y-1'
                   : 'bg-[#080B12] border-[#EA580C]/25 hover:border-[#EA580C]/60'
@@ -118,17 +130,17 @@ export default function SchrodingerEventsGrid({ onSelectTrack }) {
 
                 <div className="flex items-center space-x-1.5 text-starlight-500">
                   {isObserved ? <Eye size={13} className="text-[#FB923C]" /> : <EyeOff size={13} />}
-                  <span className="uppercase tracking-wider text-[9px] hidden sm:inline">
-                    {isObserved ? 'OBSERVED' : 'HOVER/TAP'}
+                  <span className="uppercase tracking-wider text-[9px]">
+                    {isObserved ? 'OBSERVED' : 'TAP / HOVER'}
                   </span>
                 </div>
               </div>
 
               {/* OVERLAPPING BLURRED SCHRÖDINGER TITLE LAYERS */}
-              <div className="relative z-10 mb-4 min-h-[58px] flex items-center">
+              <div className="relative z-10 mb-4 min-h-[52px] sm:min-h-[58px] flex items-center">
                 {/* Dual Offset Ghosted State (Visible when Unobserved) */}
                 <div
-                  className={`absolute inset-0 transition-all duration-500 pointer-events-none ${
+                  className={`absolute inset-0 transition-all duration-500 pointer-events-none flex flex-col justify-center ${
                     isObserved
                       ? 'opacity-0 scale-95'
                       : 'opacity-100 scale-100'
@@ -136,14 +148,14 @@ export default function SchrodingerEventsGrid({ onSelectTrack }) {
                 >
                   {/* Possibility Layer A (Offset Top-Left with Warm Amber Blur) */}
                   <div
-                    className="font-cinzel font-bold text-xl sm:text-2xl text-[#FB923C]/80 uppercase tracking-wide select-none filter blur-[2px] transform -translate-x-1 -translate-y-1"
+                    className="font-cinzel font-bold text-lg sm:text-2xl text-[#FB923C]/80 uppercase tracking-wide select-none filter blur-[2px] transform -translate-x-1 -translate-y-0.5 leading-snug"
                     aria-hidden="true"
                   >
                     {item.title}
                   </div>
                   {/* Possibility Layer B (Offset Bottom-Right with Cool Charcoal-Indigo Blur) */}
                   <div
-                    className="font-cinzel font-bold text-xl sm:text-2xl text-starlight-300/60 uppercase tracking-wide select-none filter blur-[2px] transform translate-x-1 translate-y-1 mix-blend-screen -mt-[28px] sm:-mt-[32px]"
+                    className="absolute inset-0 flex items-center font-cinzel font-bold text-lg sm:text-2xl text-starlight-300/60 uppercase tracking-wide select-none filter blur-[2px] transform translate-x-1 translate-y-0.5 mix-blend-screen leading-snug"
                     aria-hidden="true"
                   >
                     {item.title}
@@ -152,7 +164,7 @@ export default function SchrodingerEventsGrid({ onSelectTrack }) {
 
                 {/* Resolved Solid State (Crisp on Interaction) */}
                 <h3
-                  className={`font-cinzel font-bold text-xl sm:text-2xl uppercase tracking-wide transition-all duration-500 ${
+                  className={`font-cinzel font-bold text-lg sm:text-2xl uppercase tracking-wide transition-all duration-500 leading-snug ${
                     isObserved
                       ? 'text-white opacity-100 filter blur-0'
                       : 'text-transparent opacity-0 filter blur-sm'

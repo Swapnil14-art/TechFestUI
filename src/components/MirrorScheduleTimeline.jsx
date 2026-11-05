@@ -133,151 +133,99 @@ export default function MirrorScheduleTimeline() {
         </div>
       </div>
 
-      {/* DESKTOP DUAL-SIDED MIRROR TIMELINE */}
-      <div className="hidden md:block relative py-12">
-        {/* Central Vertical Burnt-Orange Mirror Axis */}
-        <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[1px] bg-gradient-to-b from-transparent via-[#EA580C] to-transparent pointer-events-none" />
+      {/* BILATERAL OPPOSING MIRROR TIMELINE (Preserved across both Desktop and Mobile) */}
+      <div className="relative py-8 sm:py-12">
+        {/* Central Vertical Burnt-Orange Mirror Axis Line */}
+        <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[1.5px] bg-gradient-to-b from-transparent via-[#EA580C] to-transparent pointer-events-none z-20" />
 
         {/* Central "MIRROR" Axis Marker */}
-        <div className="sticky top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 flex items-center justify-center my-6">
-          <div className="px-3.5 py-1 rounded-full bg-[#0E131F] border border-[#EA580C] text-[#FB923C] font-mono text-[9px] tracking-[0.25em] uppercase font-bold shadow-[0_0_20px_rgba(234,88,12,0.4)] flex items-center space-x-2">
+        <div className="sticky top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 flex items-center justify-center my-4 sm:my-6 pointer-events-none">
+          <div className="px-2.5 sm:px-3.5 py-1 rounded-full bg-[#0E131F] border border-[#EA580C] text-[#FB923C] font-mono text-[8px] sm:text-[9px] tracking-[0.2em] sm:tracking-[0.25em] uppercase font-bold shadow-[0_0_20px_rgba(234,88,12,0.5)] flex items-center space-x-1.5 sm:space-x-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#EA580C] animate-ping" />
             <span>MIRROR AXIS</span>
           </div>
         </div>
 
-        {/* Opposing Parallel Columns */}
-        <div className="grid grid-cols-2 gap-12 relative z-10">
-          {/* LEFT SIDE: Mirrored / Subdued Anti-Timeline (Moves Upwards with scroll) */}
+        {/* Opposing Parallel Columns: 2 Columns maintained on all screen dimensions */}
+        <div className="grid grid-cols-2 gap-3 sm:gap-8 md:gap-12 relative z-10">
+          {/* LEFT SIDE: Mirrored Anti-Timeline (Moves opposite scroll direction) */}
           <div
             style={{
-              transform: `translateY(${-scrollParallax * 1.2}px)`,
+              transform: `translateY(${-scrollParallax * 0.8}px)`,
               transition: 'transform 0.15s ease-out',
             }}
-            className="space-y-8 pr-8 text-right opacity-60 hover:opacity-90 transition-opacity"
+            className="space-y-4 sm:space-y-8 pr-1.5 sm:pr-8 text-right opacity-65 hover:opacity-100 transition-opacity"
           >
             {TIMELINE_DATA.map((item, idx) => (
               <div
                 key={`left-${idx}`}
-                className="glass-panel p-5 rounded-2xl border border-white/5 bg-[#090C14]/70 transform scale-x-[-1] hover:border-amber-molten/40 transition-colors"
+                className="glass-panel p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border border-white/10 bg-[#090C14]/80 transform scale-x-[-1] hover:border-amber-molten/40 transition-colors shadow-lg"
                 style={{ direction: 'rtl' }}
               >
                 <div className="transform scale-x-[-1]">
-                  <div className="flex items-center justify-between font-mono text-[10px] text-starlight-500 mb-2">
-                    <span className="text-[#EA580C] font-bold">{item.mirroredNote}</span>
-                    <span>{item.date}</span>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between font-mono text-[9px] sm:text-[10px] text-starlight-500 mb-1.5 gap-0.5">
+                    <span className="text-[#EA580C] font-bold truncate">{item.mirroredNote}</span>
+                    <span className="text-[8px] sm:text-[10px]">{item.date}</span>
                   </div>
-                  <h4 className="font-cinzel font-bold text-base text-starlight-300 uppercase tracking-wide">
+                  <h4 className="font-cinzel font-bold text-xs sm:text-base text-starlight-200 uppercase tracking-wide line-clamp-2">
                     {item.title}
                   </h4>
-                  <p className="font-sans text-xs text-starlight-500 mt-1 font-light">
+                  <p className="font-sans text-[10px] sm:text-xs text-starlight-500 mt-1 font-light line-clamp-2 hidden sm:block">
                     {item.theme}
                   </p>
-                  <div className="mt-3 text-[10px] font-mono text-starlight-500">
-                    {item.venue} • {item.time}
+                  <div className="mt-2 text-[8px] sm:text-[10px] font-mono text-starlight-400 border-t border-white/5 pt-1.5 flex flex-wrap gap-1 justify-end">
+                    <span>{item.time}</span>
                   </div>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* RIGHT SIDE: Current Forward Timeline (Moves Downwards with scroll) */}
+          {/* RIGHT SIDE: Forward Real Timeline (Moves with scroll direction) */}
           <div
             style={{
-              transform: `translateY(${scrollParallax * 1.2}px)`,
+              transform: `translateY(${scrollParallax * 0.8}px)`,
               transition: 'transform 0.15s ease-out',
             }}
-            className="space-y-8 pl-8 text-left"
+            className="space-y-4 sm:space-y-8 pl-1.5 sm:pl-8 text-left"
           >
             {TIMELINE_DATA.map((item, idx) => (
               <div
                 key={`right-${idx}`}
-                className="glass-panel-amber p-6 rounded-2xl border border-amber-molten/30 bg-[#0E1321] hover:border-[#EA580C] shadow-lg shadow-black/60 transition-all hover:-translate-y-1"
+                className="glass-panel-amber p-3.5 sm:p-6 rounded-xl sm:rounded-2xl border border-amber-molten/30 bg-[#0E1321] hover:border-[#EA580C] shadow-xl shadow-black/70 transition-all hover:-translate-y-1"
               >
-                <div className="flex items-center justify-between font-mono text-[10px] mb-2">
-                  <div className="flex items-center space-x-2">
-                    <span className="px-2 py-0.5 rounded-full bg-amber-molten/20 text-[#FB923C] font-bold uppercase tracking-wider">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between font-mono text-[9px] sm:text-[10px] mb-1.5 gap-1">
+                  <div className="flex items-center space-x-1.5">
+                    <span className="px-1.5 sm:px-2 py-0.5 rounded-full bg-amber-molten/20 text-[#FB923C] font-bold uppercase tracking-wider text-[8px] sm:text-[10px]">
                       {item.tag}
                     </span>
                     <span className="text-white font-bold">{item.day}</span>
                   </div>
-                  <span className="text-starlight-400 font-semibold">{item.date}</span>
+                  <span className="text-starlight-400 font-semibold text-[8px] sm:text-[10px] hidden xs:inline">{item.date}</span>
                 </div>
 
-                <h4 className="font-cinzel font-bold text-lg text-white uppercase tracking-wide text-gradient-gold">
+                <h4 className="font-cinzel font-bold text-xs sm:text-lg text-white uppercase tracking-wide text-gradient-gold line-clamp-2">
                   {item.title}
                 </h4>
 
-                <p className="font-sans text-xs text-starlight-300 mt-1 font-light leading-relaxed">
+                <p className="font-sans text-[10px] sm:text-xs text-starlight-300 mt-1 font-light leading-relaxed line-clamp-2 hidden sm:block">
                   {item.theme}
                 </p>
 
-                <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between font-mono text-xs text-starlight-400">
-                  <div className="flex items-center space-x-1.5 text-starlight-400">
-                    <Clock size={12} className="text-[#EA580C]" />
-                    <span>{item.time}</span>
+                <div className="mt-2.5 sm:mt-4 pt-2 sm:pt-3 border-t border-white/10 flex flex-wrap items-center justify-between font-mono text-[9px] sm:text-xs text-starlight-400 gap-1">
+                  <div className="flex items-center space-x-1 text-starlight-300">
+                    <Clock size={11} className="text-[#EA580C] shrink-0" />
+                    <span className="truncate">{item.time}</span>
                   </div>
-                  <div className="flex items-center space-x-1.5 text-starlight-400">
-                    <MapPin size={12} className="text-gold-antique" />
-                    <span>{item.venue}</span>
+                  <div className="hidden sm:flex items-center space-x-1 text-starlight-400">
+                    <MapPin size={11} className="text-gold-antique shrink-0" />
+                    <span className="truncate">{item.venue}</span>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
-      </div>
-
-      {/* MOBILE READABLE SINGLE-COLUMN MIRROR TIMELINE (Clean, No Horizontal Overflow) */}
-      <div className="md:hidden space-y-6 py-6">
-        <div className="flex items-center justify-center my-4">
-          <div className="px-3 py-1 rounded-full bg-[#0E131F] border border-[#EA580C] text-[#FB923C] font-mono text-[9px] tracking-widest uppercase font-bold shadow-md flex items-center space-x-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#EA580C] animate-pulse" />
-            <span>MIRROR TIMELINE STREAM</span>
-          </div>
-        </div>
-
-        {TIMELINE_DATA.map((item, idx) => (
-          <div
-            key={`mobile-${idx}`}
-            className="rounded-2xl p-5 bg-[#0C101A] border border-[#EA580C]/35 relative overflow-hidden space-y-3"
-          >
-            {/* Primary Forward Event */}
-            <div>
-              <div className="flex items-center justify-between font-mono text-[10px] mb-1.5">
-                <span className="px-2 py-0.5 rounded-full bg-[#EA580C]/20 text-[#FB923C] font-bold uppercase tracking-wider">
-                  {item.tag} • {item.day}
-                </span>
-                <span className="text-starlight-400">{item.date}</span>
-              </div>
-
-              <h4 className="font-cinzel font-bold text-base text-white uppercase tracking-wide">
-                {item.title}
-              </h4>
-
-              <p className="font-sans text-xs text-starlight-300 mt-1 font-light">
-                {item.theme}
-              </p>
-
-              <div className="mt-3 flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-starlight-400">
-                <div className="flex items-center space-x-1">
-                  <Clock size={11} className="text-[#EA580C]" />
-                  <span>{item.time}</span>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <MapPin size={11} className="text-gold" />
-                  <span>{item.venue}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Subdued Embedded Mirrored Parity Strip */}
-            <div className="pt-2.5 border-t border-dashed border-white/10 flex items-center justify-between font-mono text-[9px] text-starlight-500 opacity-60">
-              <span className="tracking-widest uppercase text-[#EA580C]">MIRROR PARITY:</span>
-              <span className="italic">{item.mirroredNote}</span>
-            </div>
-          </div>
-        ))}
       </div>
     </div>
   );
