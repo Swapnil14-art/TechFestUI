@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowRight, ShieldCheck, Sparkles, Terminal, Volume2, VolumeX } from 'lucide-react';
 
-// Served from public/hero/ — Vercel CDN delivers it directly without bundling.
-// This bypasses Git LFS non-retrieval on Vercel builds.
-const heroVideo = '/hero/techfesthero.mp4';
+// Verified Web-optimized video with faststart (+moov at file head)
+const heroVideo = '/assets/hero/techfest-hero-final.mp4';
 
 /**
  * Interstellar × Cosmic Mythology Hero Component
@@ -40,16 +39,31 @@ export default function InterstellarHeroVideo({
     return () => clearInterval(timer);
   }, []);
 
-  // Initialize video autoplay (muted initially to respect browser autoplay policies)
+  // Initialize video autoplay (muted initially to comply with browser autoplay policies)
   useEffect(() => {
     const video = videoRef.current;
-    if (video) {
-      video.muted = !isAudioActive;
-      video.playsInline = true;
+    if (!video) return;
+
+    video.muted = !isAudioActive;
+    video.defaultMuted = true;
+    video.playsInline = true;
+
+    const attemptPlay = () => {
       const playPromise = video.play();
       if (playPromise !== undefined) {
-        playPromise.catch(() => {});
+        playPromise.catch((err) => {
+          // Autoplay fallback: guarantee muted and retry
+          video.muted = true;
+          video.play().catch(() => {});
+        });
       }
+    };
+
+    if (video.readyState >= 2) {
+      attemptPlay();
+    } else {
+      video.addEventListener('loadeddata', attemptPlay, { once: true });
+      video.addEventListener('canplay', attemptPlay, { once: true });
     }
   }, []);
 
