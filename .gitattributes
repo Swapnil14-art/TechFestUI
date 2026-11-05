@@ -1,5 +1,0 @@
-# Track large video files in hero/ root with Git LFS
-hero/*.mp4 filter=lfs diff=lfs merge=lfs -text
-
-# public/ assets must NOT use LFS — Vercel needs the actual binary during build
-public/**/*.mp4 -filter -diff -merge text
