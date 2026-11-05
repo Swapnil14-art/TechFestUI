@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ArrowUpRight, Binary, Bot, Cpu, Eye, Gamepad2, Layers, Sparkles, Trophy, Users, X } from 'lucide-react';
 import { COMPETITIONS } from './FestEvents';
 
@@ -9,32 +9,74 @@ import { COMPETITIONS } from './FestEvents';
  * - The negative space between cards forms a hidden iconic symbol (the Paradox "∞" and "P" glyph).
  * - On hover/focus, cards subtly shift while the negative space illuminates with a restrained amber/gold glow.
  * - Grid recalculates responsively on mobile to maintain deliberate geometric composition.
+ * - On phone screens: Entire section is rotated 90 degrees clockwise as one unit for full landscape viewing.
  */
 export default function FigureGroundArenas({ onSelectTrack }) {
   const [hoveredArena, setHoveredArena] = useState(null);
   const [selectedArena, setSelectedArena] = useState(null);
 
-  return (
-    <div className="w-full relative select-none">
-      {/* Section Heading */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-        <div>
-          <span className="font-mono text-xs text-amber-molten uppercase tracking-[0.25em] block mb-2 font-bold">
-            [ 03 // FIGURE / GROUND MATRIX ]
-          </span>
-          <h2 className="font-cinzel font-black text-3xl sm:text-5xl text-white tracking-wide uppercase">
-            Contradiction <span className="text-gradient-gold">Arenas</span>
-          </h2>
-          <p className="font-sans text-xs sm:text-sm text-starlight-400 mt-2 max-w-lg font-light">
-            An architectural Gestalt composition where the cards and the negative space between them form two simultaneous realities. Hover to illuminate the hidden figure.
-          </p>
-        </div>
+  const containerRef = useRef(null);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
-        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full glass-panel border border-white/10 text-[10px] font-mono text-starlight-400 uppercase tracking-widest">
-          <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
-          <span>GESTALT OPTICAL PARADOX</span>
-        </div>
-      </div>
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.clientWidth);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Landscape width on mobile phones (occupies vertical page space on phone)
+  const landscapeWidth = 820;
+
+  return (
+    <>
+      {/* Outer viewport frame for mobile 90-deg clockwise rotation; standard flow on desktop */}
+      <div
+        ref={containerRef}
+        className="w-full relative overflow-hidden md:overflow-visible transition-all duration-300"
+        style={isMobile && containerWidth > 0 ? { height: `${landscapeWidth}px` } : undefined}
+      >
+        {/* Complete Section Rotated 90 degrees clockwise on phone screens as ONE unit */}
+        <div
+          className="w-full relative select-none md:transform-none"
+          style={
+            isMobile && containerWidth > 0
+              ? {
+                  width: `${landscapeWidth}px`,
+                  height: `${containerWidth}px`,
+                  transformOrigin: '0 0',
+                  transform: `translate(${containerWidth}px, 0) rotate(90deg)`,
+                  overflow: 'hidden',
+                }
+              : undefined
+          }
+        >
+          {/* Section Heading */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-3 md:mb-10 gap-2 md:gap-4">
+            <div>
+              <span className="font-mono text-[10px] md:text-xs text-amber-molten uppercase tracking-[0.25em] block mb-1 md:mb-2 font-bold">
+                [ 03 // FIGURE / GROUND MATRIX ]
+              </span>
+              <h2 className="font-cinzel font-black text-2xl sm:text-3xl md:text-5xl text-white tracking-wide uppercase">
+                Contradiction <span className="text-gradient-gold">Arenas</span>
+              </h2>
+              <p className="font-sans text-xs sm:text-sm text-starlight-400 mt-1 md:mt-2 max-w-lg font-light line-clamp-1 sm:line-clamp-2 md:line-clamp-none">
+                An architectural Gestalt composition where the cards and the negative space between them form two simultaneous realities. Hover to illuminate the hidden figure.
+              </p>
+            </div>
+
+            <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 md:px-3 md:py-1 rounded-full glass-panel border border-white/10 text-[9px] md:text-[10px] font-mono text-starlight-400 uppercase tracking-widest self-start md:self-auto">
+              <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
+              <span>GESTALT OPTICAL PARADOX</span>
+            </div>
+          </div>
 
       {/* FIGURE / GROUND GRID CONTAINER (Scrollable Landscape Viewport on Mobile, Native Grid on Laptop) */}
       <div className="relative p-3 sm:p-8 rounded-3xl bg-[#04060C] border border-white/10 overflow-hidden shadow-2xl">
@@ -55,26 +97,27 @@ export default function FigureGroundArenas({ onSelectTrack }) {
         <div className="md:hidden flex items-center justify-between pb-3 px-1 text-[10px] font-mono text-starlight-400">
           <span className="flex items-center space-x-1.5 text-amber-molten">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-molten animate-ping" />
-            <span>GESTALT HORIZONTAL MOSAIC</span>
+            <span>5–6 COLUMN GESTALT LANDSCAPE</span>
           </span>
           <span className="text-[9px] text-starlight-500 uppercase tracking-widest">
-            SWIPE HORIZONTALLY →
+            SWIPE HORIZONTALLY (LANDSCAPE GRID) →
           </span>
         </div>
 
         {/* Horizontal Scroll wrapper for phones, clean responsive grid on tablet/laptop */}
         <div className="overflow-x-auto pb-4 md:pb-0 scrollbar-thin scrollbar-thumb-amber-molten/30 -mx-1 px-1">
-          {/* Multi-column mosaic layout preserved on all devices (min 860px on mobile to guarantee laptop landscape layout) */}
-          <div className="grid grid-cols-4 gap-4 sm:gap-6 relative z-10 min-w-[860px] md:min-w-0">
+          {/* Multi-column mosaic layout: 6 columns landscape on mobile (min-w-[1100px]), reverting to native 4 columns on desktop */}
+          <div className="grid grid-cols-6 md:grid-cols-4 gap-4 sm:gap-6 relative z-10 min-w-[1100px] md:min-w-0">
             {/* Card 1: Hackathon (Spans 2 columns) */}
             <div
               onMouseEnter={() => setHoveredArena('singularity')}
               onMouseLeave={() => setHoveredArena(null)}
               onClick={() => {
                 setHoveredArena((prev) => (prev === 'singularity' ? null : 'singularity'));
-                setSelectedArena(COMPETITIONS[0]);
               }}
-              className="col-span-2 rounded-2xl p-5 sm:p-8 bg-[#E5E2D9] hover:bg-[#EDEAE1] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group"
+              className={`col-span-2 md:col-span-2 rounded-2xl p-5 sm:p-8 bg-[#E5E2D9] hover:bg-[#EDEAE1] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group ${
+                hoveredArena === 'singularity' ? 'ring-2 ring-amber-molten shadow-2xl' : ''
+              }`}
             >
               <div>
                 <div className="flex items-center justify-between font-mono text-[10px] text-[#4A5568] uppercase tracking-wider mb-3">
@@ -98,7 +141,13 @@ export default function FigureGroundArenas({ onSelectTrack }) {
                   <span className="text-[9px] text-[#718096] block uppercase tracking-wider">BOUNTY</span>
                   <span className="font-bold text-[#0A0D15] text-sm sm:text-base">{COMPETITIONS[0].bounty}</span>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all">
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedArena(COMPETITIONS[0]);
+                  }}
+                  className="w-8 h-8 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                >
                   <ArrowUpRight size={14} />
                 </div>
               </div>
@@ -110,9 +159,10 @@ export default function FigureGroundArenas({ onSelectTrack }) {
               onMouseLeave={() => setHoveredArena(null)}
               onClick={() => {
                 setHoveredArena((prev) => (prev === 'robotics' ? null : 'robotics'));
-                setSelectedArena(COMPETITIONS[1]);
               }}
-              className="col-span-1 rounded-2xl p-5 sm:p-6 bg-[#D8D5CC] hover:bg-[#E3DFD5] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group"
+              className={`col-span-1 md:col-span-1 rounded-2xl p-5 sm:p-6 bg-[#D8D5CC] hover:bg-[#E3DFD5] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group ${
+                hoveredArena === 'robotics' ? 'ring-2 ring-amber-molten shadow-2xl' : ''
+              }`}
             >
               <div>
                 <div className="flex items-center justify-between font-mono text-[10px] text-[#4A5568] uppercase tracking-wider mb-3">
@@ -130,14 +180,20 @@ export default function FigureGroundArenas({ onSelectTrack }) {
               </div>
               <div className="mt-4 sm:mt-6 pt-4 border-t border-black/10 flex items-center justify-between font-mono text-xs">
                 <span className="font-bold text-[#0A0D15] text-xs sm:text-sm">{COMPETITIONS[1].bounty}</span>
-                <div className="w-7 h-7 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all">
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedArena(COMPETITIONS[1]);
+                  }}
+                  className="w-7 h-7 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                >
                   <ArrowUpRight size={13} />
                 </div>
               </div>
             </div>
 
-            {/* DELIBERATE NEGATIVE SPACE CELL (The Ground Silhouette - Visible on all devices) */}
-            <div className="col-span-1 rounded-2xl border border-dashed border-amber-molten/40 p-5 flex flex-col items-center justify-center text-center font-mono text-xs text-starlight-300 bg-void/60 backdrop-blur-md">
+            {/* DELIBERATE NEGATIVE SPACE CELL 1 (The Ground Silhouette - Visible on all devices) */}
+            <div className="col-span-1 md:col-span-1 rounded-2xl border border-dashed border-amber-molten/40 p-5 flex flex-col items-center justify-center text-center font-mono text-xs text-starlight-300 bg-void/60 backdrop-blur-md">
               <span className="text-[10px] text-amber-molten tracking-widest uppercase font-bold">
                 NEGATIVE HORIZON
               </span>
@@ -155,9 +211,10 @@ export default function FigureGroundArenas({ onSelectTrack }) {
               onMouseLeave={() => setHoveredArena(null)}
               onClick={() => {
                 setHoveredArena((prev) => (prev === 'cipher' ? null : 'cipher'));
-                setSelectedArena(COMPETITIONS[2]);
               }}
-              className="col-span-1 rounded-2xl p-5 sm:p-6 bg-[#D8D5CC] hover:bg-[#E3DFD5] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group"
+              className={`col-span-1 md:col-span-1 rounded-2xl p-5 sm:p-6 bg-[#D8D5CC] hover:bg-[#E3DFD5] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group ${
+                hoveredArena === 'cipher' ? 'ring-2 ring-amber-molten shadow-2xl' : ''
+              }`}
             >
               <div>
                 <div className="flex items-center justify-between font-mono text-[10px] text-[#4A5568] uppercase tracking-wider mb-3">
@@ -175,7 +232,13 @@ export default function FigureGroundArenas({ onSelectTrack }) {
               </div>
               <div className="mt-4 sm:mt-6 pt-4 border-t border-black/10 flex items-center justify-between font-mono text-xs">
                 <span className="font-bold text-[#0A0D15] text-xs sm:text-sm">{COMPETITIONS[2].bounty}</span>
-                <div className="w-7 h-7 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all">
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedArena(COMPETITIONS[2]);
+                  }}
+                  className="w-7 h-7 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                >
                   <ArrowUpRight size={13} />
                 </div>
               </div>
@@ -187,9 +250,10 @@ export default function FigureGroundArenas({ onSelectTrack }) {
               onMouseLeave={() => setHoveredArena(null)}
               onClick={() => {
                 setHoveredArena((prev) => (prev === 'design' ? null : 'design'));
-                setSelectedArena(COMPETITIONS[3]);
               }}
-              className="col-span-1 rounded-2xl p-5 sm:p-6 bg-[#D8D5CC] hover:bg-[#E3DFD5] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group"
+              className={`col-span-1 md:col-span-1 rounded-2xl p-5 sm:p-6 bg-[#D8D5CC] hover:bg-[#E3DFD5] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group ${
+                hoveredArena === 'design' ? 'ring-2 ring-amber-molten shadow-2xl' : ''
+              }`}
             >
               <div>
                 <div className="flex items-center justify-between font-mono text-[10px] text-[#4A5568] uppercase tracking-wider mb-3">
@@ -207,7 +271,13 @@ export default function FigureGroundArenas({ onSelectTrack }) {
               </div>
               <div className="mt-4 sm:mt-6 pt-4 border-t border-black/10 flex items-center justify-between font-mono text-xs">
                 <span className="font-bold text-[#0A0D15] text-xs sm:text-sm">{COMPETITIONS[3].bounty}</span>
-                <div className="w-7 h-7 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all">
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedArena(COMPETITIONS[3]);
+                  }}
+                  className="w-7 h-7 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                >
                   <ArrowUpRight size={13} />
                 </div>
               </div>
@@ -219,9 +289,10 @@ export default function FigureGroundArenas({ onSelectTrack }) {
               onMouseLeave={() => setHoveredArena(null)}
               onClick={() => {
                 setHoveredArena((prev) => (prev === 'esports' ? null : 'esports'));
-                setSelectedArena(COMPETITIONS[4]);
               }}
-              className="col-span-2 rounded-2xl p-5 sm:p-8 bg-[#E5E2D9] hover:bg-[#EDEAE1] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group"
+              className={`col-span-2 md:col-span-2 rounded-2xl p-5 sm:p-8 bg-[#E5E2D9] hover:bg-[#EDEAE1] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group ${
+                hoveredArena === 'esports' ? 'ring-2 ring-amber-molten shadow-2xl' : ''
+              }`}
             >
               <div>
                 <div className="flex items-center justify-between font-mono text-[10px] text-[#4A5568] uppercase tracking-wider mb-3">
@@ -245,12 +316,78 @@ export default function FigureGroundArenas({ onSelectTrack }) {
                   <span className="text-[9px] text-[#718096] block uppercase tracking-wider">PRIZE BOUNTY</span>
                   <span className="font-bold text-[#0A0D15] text-sm sm:text-base">{COMPETITIONS[4].bounty}</span>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all">
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedArena(COMPETITIONS[4]);
+                  }}
+                  className="w-8 h-8 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                >
                   <ArrowUpRight size={14} />
                 </div>
               </div>
             </div>
+
+            {/* Card 6: AI Derby (Frontier AI - Visible in mobile 6-col landscape matrix, hidden on md/lg desktop) */}
+            <div
+              onMouseEnter={() => setHoveredArena('ai-derby')}
+              onMouseLeave={() => setHoveredArena(null)}
+              onClick={() => {
+                setHoveredArena((prev) => (prev === 'ai-derby' ? null : 'ai-derby'));
+              }}
+              className={`col-span-2 md:hidden rounded-2xl p-5 sm:p-8 bg-[#D8D5CC] hover:bg-[#E3DFD5] text-[#0A0D15] transition-all duration-500 cursor-pointer shadow-xl flex flex-col justify-between group ${
+                hoveredArena === 'ai-derby' ? 'ring-2 ring-amber-molten shadow-2xl' : ''
+              }`}
+            >
+              <div>
+                <div className="flex items-center justify-between font-mono text-[10px] text-[#4A5568] uppercase tracking-wider mb-3">
+                  <span className="px-2 py-0.5 rounded-full bg-black/10 font-bold">
+                    {COMPETITIONS[5].tag}
+                  </span>
+                  <span>06</span>
+                </div>
+                <h3 className="font-cinzel font-bold text-lg sm:text-2xl uppercase tracking-wide text-[#0A0D15] group-hover:text-[#B45309] transition-colors">
+                  {COMPETITIONS[5].title}
+                </h3>
+                <p className="font-serif italic text-xs text-[#78350F] mt-1 font-semibold">
+                  "{COMPETITIONS[5].paradox}"
+                </p>
+                <p className="font-sans text-xs text-[#2D3748] mt-2 line-clamp-2 font-light">
+                  {COMPETITIONS[5].description}
+                </p>
+              </div>
+              <div className="mt-4 sm:mt-6 pt-4 border-t border-black/10 flex items-center justify-between font-mono text-xs">
+                <div>
+                  <span className="text-[9px] text-[#718096] block uppercase tracking-wider">BOUNTY</span>
+                  <span className="font-bold text-[#0A0D15] text-sm">{COMPETITIONS[5].bounty}</span>
+                </div>
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedArena(COMPETITIONS[5]);
+                  }}
+                  className="w-7 h-7 rounded-full bg-black/10 group-hover:bg-[#0A0D15] group-hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                >
+                  <ArrowUpRight size={13} />
+                </div>
+              </div>
+            </div>
+
+            {/* DELIBERATE NEGATIVE SPACE CELL 2 (Figure/Ground Shift - Visible in mobile 6-col landscape matrix, hidden on md/lg desktop) */}
+            <div className="col-span-2 md:hidden rounded-2xl border border-dashed border-amber-molten/40 p-5 flex flex-col items-center justify-center text-center font-mono text-xs text-starlight-300 bg-void/60 backdrop-blur-md">
+              <span className="text-[10px] text-amber-molten tracking-widest uppercase font-bold">
+                FIGURE / GROUND SHIFT
+              </span>
+              <div className="font-cinzel font-black text-2xl text-gradient-gold my-1.5">
+                ∞ PARADOX
+              </div>
+              <span className="text-[9px] text-starlight-500 uppercase tracking-widest">
+                MUTUALLY INCLUSIVE REALITIES
+              </span>
+            </div>
           </div>
+        </div>
+      </div>
         </div>
       </div>
 
@@ -319,7 +456,7 @@ export default function FigureGroundArenas({ onSelectTrack }) {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

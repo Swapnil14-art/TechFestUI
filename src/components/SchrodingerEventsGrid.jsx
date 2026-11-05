@@ -87,8 +87,20 @@ export default function SchrodingerEventsGrid({ onSelectTrack }) {
         </div>
       </div>
 
-      {/* Schrödinger Grid Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Mobile 2-Row Matrix Indicator */}
+      <div className="md:hidden flex items-center justify-between pb-3 px-1 text-[10px] font-mono text-starlight-400">
+        <span className="flex items-center space-x-1.5 text-amber-molten">
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-molten animate-ping" />
+          <span>2-ROW QUANTUM MATRIX</span>
+        </span>
+        <span className="text-[9px] text-starlight-500 uppercase tracking-widest">
+          SWIPE HORIZONTALLY →
+        </span>
+      </div>
+
+      {/* Schrödinger Grid Cards: Exactly 2 rows on mobile with contained horizontal swipe; standard 2/3 cols on tablet/desktop */}
+      <div className="overflow-x-auto pb-4 md:pb-0 scrollbar-thin scrollbar-thumb-amber-molten/30 -mx-4 px-4 sm:mx-0 sm:px-0">
+        <div className="grid grid-rows-2 grid-flow-col auto-cols-[285px] sm:auto-cols-[320px] auto-rows-fr gap-4 md:grid-rows-none md:grid-flow-row md:auto-rows-auto md:grid-cols-2 lg:grid-cols-3 md:gap-6 md:auto-cols-auto">
         {filtered.map((item) => {
           const isObserved = !!observedCards[item.id];
           const Icon = item.icon;
@@ -225,6 +237,7 @@ export default function SchrodingerEventsGrid({ onSelectTrack }) {
             </div>
           );
         })}
+        </div>
       </div>
 
       {/* Specification Modal (Reused for consistent event inspection) */}
