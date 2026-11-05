@@ -19,6 +19,8 @@ Open the local URL printed by Vite (usually `http://localhost:5173`).
 
 - **Paradox Themed:** The tech fest ui design is totally taken inspiration from PARADOX and Intersteller movie.
 
+- **Compatible for Phone UI:** Deisng is compatible with pohone ui too
+
 
 ## Project structure
 
