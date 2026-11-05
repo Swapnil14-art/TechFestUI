@@ -54,7 +54,7 @@ export default function InterstellarHeroVideo({
         playPromise.catch((err) => {
           // Autoplay fallback: guarantee muted and retry
           video.muted = true;
-          video.play().catch(() => {});
+          video.play().catch(() => { });
         });
       }
     };
@@ -115,7 +115,7 @@ export default function InterstellarHeroVideo({
       if (video.paused) {
         const playPromise = video.play();
         if (playPromise !== undefined) {
-          playPromise.catch(() => {});
+          playPromise.catch(() => { });
         }
       }
     } else {
@@ -133,7 +133,7 @@ export default function InterstellarHeroVideo({
       } else {
         const playPromise = video.play();
         if (playPromise !== undefined) {
-          playPromise.catch(() => {});
+          playPromise.catch(() => { });
         }
       }
     };
@@ -285,8 +285,8 @@ export default function InterstellarHeroVideo({
             <button
               onClick={onToggleAudio}
               className={`flex items-center space-x-1.5 px-3 py-1 rounded-full border transition-all pointer-events-auto cursor-pointer ${isAudioActive
-                  ? 'bg-gold/20 border-gold text-gold-bright shadow-sm shadow-gold/30'
-                  : 'glass-panel border-white/10 text-starlight-400 hover:text-white hover:border-gold/40'
+                ? 'bg-gold/20 border-gold text-gold-bright shadow-sm shadow-gold/30'
+                : 'glass-panel border-white/10 text-starlight-400 hover:text-white hover:border-gold/40'
                 }`}
               title={isAudioActive ? 'Mute Video Soundtrack' : 'Unmute Synchronized Video Audio'}
             >
@@ -307,11 +307,10 @@ export default function InterstellarHeroVideo({
           {onToggleAudio && (
             <button
               onClick={onToggleAudio}
-              className={`flex items-center space-x-1.5 px-3 py-1 rounded-full border transition-all pointer-events-auto cursor-pointer ${
-                isAudioActive
-                  ? 'bg-gold/20 border-gold text-gold-bright shadow-sm shadow-gold/30'
-                  : 'glass-panel border-white/10 text-starlight-400 hover:text-white hover:border-gold/40'
-              }`}
+              className={`flex items-center space-x-1.5 px-3 py-1 rounded-full border transition-all pointer-events-auto cursor-pointer ${isAudioActive
+                ? 'bg-gold/20 border-gold text-gold-bright shadow-sm shadow-gold/30'
+                : 'glass-panel border-white/10 text-starlight-400 hover:text-white hover:border-gold/40'
+                }`}
               title={isAudioActive ? 'Mute Video Soundtrack' : 'Unmute Synchronized Video Audio'}
             >
               {isAudioActive ? (
