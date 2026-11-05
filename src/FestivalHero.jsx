@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ArrowRight, Compass, Sparkles, Terminal, Shield, Orbit } from 'lucide-react';
 
 export default function FestivalHero({ onExploreArenas, onOpenPass }) {
-  // Live ticking countdown to March 11, 2026
+  // Live ticking countdo wn to March 11, 2026
   const [timeLeft, setTimeLeft] = useState({ days: 12, hours: 4, mins: 31, secs: 9 });
 
   useEffect(() => {
